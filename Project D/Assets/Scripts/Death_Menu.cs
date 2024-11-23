@@ -13,11 +13,11 @@ public class Death_Menu : MonoBehaviour
     }
     public void Restart()
     {
-        SceneManager.LoadScene("MainLevel");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 
     public void BackToMenu()
     {
-        SceneManager.LoadScene("Main Menu");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 2);
     }
 }

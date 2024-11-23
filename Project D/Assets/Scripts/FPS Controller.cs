@@ -23,17 +23,11 @@ public class FPSController : MonoBehaviour
 
     CharacterController characterController;
 
-    private Alteruna.Avatar _avatar;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        _avatar = GetComponent<Alteruna.Avatar>();
-
-        if (!_avatar.IsMe)
-            return;
-
         characterController = GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -42,10 +36,6 @@ public class FPSController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        if (!_avatar.IsMe)
-            return;
-
         #region Handles Movement
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
