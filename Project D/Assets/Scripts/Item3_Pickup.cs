@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item2_Pickup : MonoBehaviour
+public class Item3_Pickup : MonoBehaviour
 {
     public float pickupRange = 2f; // Range within which the player can pick up the item
     public NPC_Dialogue npcDialogue; // Reference to the NPC_Dialogue script
@@ -14,7 +14,7 @@ public class Item2_Pickup : MonoBehaviour
     {
         if (isPlayerInRange && Input.GetKeyDown(KeyCode.E))
         {
-            PickupItem2();
+            PickupItem3();
         }
     }
 
@@ -34,15 +34,15 @@ public class Item2_Pickup : MonoBehaviour
         }
     }
 
-    private void PickupItem2()
+    private void PickupItem3()
     {
         //Debug.Log("Item picked up!");
 
         if (npcDialogue != null)
         {
             //Debug.Log("Changing NPC dialogue");
-            npcDialogue.item2PickedUp = true;
-            npcDialogue.currentDialogueIndex = 4;
+            npcDialogue.item3PickedUp = true;
+            npcDialogue.currentDialogueIndex = 6;
             npcDialogue.ChangeDialogue();
         }
         gameObject.SetActive(false); // Make the item disappear

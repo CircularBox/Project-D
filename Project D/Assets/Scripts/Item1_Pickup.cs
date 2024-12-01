@@ -38,7 +38,6 @@ public class Item1_Pickup : MonoBehaviour
     {
         //Debug.Log("Item picked up!");
 
-        // Change the NPC's dialogue to the second index
         if (npcDialogue != null)
         {
             //Debug.Log("Changing NPC dialogue");
