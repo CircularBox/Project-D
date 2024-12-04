@@ -8,6 +8,16 @@ public class Item3_Pickup : MonoBehaviour
     public NPC_Dialogue npcDialogue; // Reference to the NPC_Dialogue script
 
     private bool isPlayerInRange = false;
+    private SphereCollider pickupCollider;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        // Add a SphereCollider and set it as a trigger
+        pickupCollider = gameObject.AddComponent<SphereCollider>();
+        pickupCollider.isTrigger = true;
+        pickupCollider.radius = pickupRange;
+    }
 
     // Update is called once per frame
     void Update()
