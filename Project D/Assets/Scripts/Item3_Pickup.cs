@@ -5,7 +5,10 @@ using UnityEngine;
 public class Item3_Pickup : MonoBehaviour
 {
     public float pickupRange = 2f; // Range within which the player can pick up the item
-    public NPC_Dialogue npcDialogue; // Reference to the NPC_Dialogue script
+    public NPC_Dialogue npcDialogue; // NPC_Dialogue script
+    public AudioSource pickupSound; // AudioSource component for the pickup sound
+    public Transform playerTransform; 
+    public float moveSpeed = 5f; // Speed at which the item moves towards the player
 
     private bool isPlayerInRange = false;
     private SphereCollider pickupCollider;
@@ -13,7 +16,6 @@ public class Item3_Pickup : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Add a SphereCollider and set it as a trigger
         pickupCollider = gameObject.AddComponent<SphereCollider>();
         pickupCollider.isTrigger = true;
         pickupCollider.radius = pickupRange;
@@ -55,6 +57,32 @@ public class Item3_Pickup : MonoBehaviour
             npcDialogue.currentDialogueIndex = 6;
             npcDialogue.ChangeDialogue();
         }
+
+        // Play the pickup audio
+        if (pickupSound != null)
+        {
+            pickupSound.Play();
+            Debug.Log("Playing pickup sound");
+        }
+
+        // Start the coroutine to move the item towards the player and remove it after a delay
+        StartCoroutine(MoveItemTowardsPlayerAndRemove(1f)); // 1 second delay
+    }
+
+    private IEnumerator MoveItemTowardsPlayerAndRemove(float delay)
+    {
+        float elapsedTime = 0f;
+        Vector3 initialPosition = transform.position;
+
+        while (elapsedTime < delay)
+        {
+            transform.position = Vector3.Lerp(initialPosition, playerTransform.position, elapsedTime / delay);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.position = playerTransform.position; // Ensure the item reaches the player
+
         gameObject.SetActive(false); // Make the item disappear
     }
 }
