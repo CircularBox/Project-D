@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Item3_Pickup : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class Item3_Pickup : MonoBehaviour
     public AudioSource pickupSound; // AudioSource component for the pickup sound
     public Transform playerTransform; 
     public float moveSpeed = 5f; // Speed at which the item moves towards the player
+    public Canvas endCanvas; // Reference to the Canvas to be activated
 
     private bool isPlayerInRange = false;
     private SphereCollider pickupCollider;
@@ -65,6 +67,12 @@ public class Item3_Pickup : MonoBehaviour
             Debug.Log("Playing pickup sound");
         }
 
+        // Activate the end canvas
+        if (endCanvas != null)
+        {
+            endCanvas.gameObject.SetActive(true);
+        }
+
         // Start the coroutine to move the item towards the player and remove it after a delay
         StartCoroutine(MoveItemTowardsPlayerAndRemove(1f)); // 1 second delay
     }
@@ -83,6 +91,9 @@ public class Item3_Pickup : MonoBehaviour
 
         transform.position = playerTransform.position; // Ensure the item reaches the player
 
-        gameObject.SetActive(false); // Make the item disappear
+        transform.localScale = Vector3.zero; //Shrink item to not visible so next scene can still be loaded
+
+        yield return new WaitForSeconds(5f); // Delay before sending to End Menu
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }
